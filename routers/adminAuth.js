@@ -5,6 +5,7 @@ import adminModel from '../models/admin.js'
 import cloudinary from '../config_upload/cloudinary.js'
 import upload from '../config_upload/multer.js'
 import carLevelModel from '../models/car_level.js'
+import carModel from '../models/car.js'
 
 
 const r = Router()
@@ -72,9 +73,30 @@ r.put('/car-level/:id', upload.single('img'), async (req, res) => {
 
 
 r.post('/car', async (req, res) => {
-
-
-
+    const createCarSchema = joi.object({
+        level_Id: joi.string().required(),
+        car_photo: joi.string(),
+        car_name: joi.string().pattern(new RegExp('^[a-zA-Z0-9 ]{3,100}$')).required(),
+        car_price: joi.number().required(),
+        currency: joi.string(),
+        car_fuel: joi.number().required(),
+        car_fuel_price: joi.number().required(),
+        fuel_used_for_passenger: joi.number().required(),
+        earnings_percent: joi.number().required(),
+        daily_earnings: joi.number().required(),
+        total_earnings: joi.number().required(),
+        total_earnings_day: joi.number().required(),
+        passenger_pickup_time: joi.date().required(),
+        passenger_transport_price: joi.number().required(),
+        passenger_count_day: joi.number().required(),
+        user_Ids: joi.array().required()
+    })
+    const {error, value} = createCarSchema.validate(req.body)
+        if (error) {
+            return res.status(401).send(error.message)
+        }
+        const createdData = await carModel.post(value)
+        return res.status(200).send(createdData)
 })
 
 export default r
