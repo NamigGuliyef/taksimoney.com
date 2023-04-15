@@ -2,9 +2,9 @@ import mongoose, { model, Schema } from "mongoose";
 
 const passengerBotSchema = new Schema({
 
-    level_id: { type: mongoose.Schema.Types.ObjectId, required: true },
-    carsId: { type: mongoose.Schema.Types.ObjectId, required: true },
-    bot_photo: { type: String, required: true },
+    level_Id: { type: mongoose.Schema.Types.ObjectId, ref: 'carLevel', required: true },
+    carsId: { type: mongoose.Schema.Types.ObjectId, ref: 'car', required: true },
+    photo: { type: String, required: true },
 
 }, { versionKey: false, timestamps: true })
 

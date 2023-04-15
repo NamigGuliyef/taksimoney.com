@@ -120,7 +120,6 @@ r.post('/forget-password', async (req, res) => {
     })
 })
 
-
 //test edilib --> mail adresinde olan linke daxil olduqdan sonra yonlendirilen sehifede yeni parolu qeyd etmek
 
 r.post('/recovery/:token', (req, res) => {
