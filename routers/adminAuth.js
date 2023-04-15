@@ -72,7 +72,7 @@ r.put('/car-level/:id', upload.single('img'), async (req, res) => {
 })
 
 
-r.post('/car', async (req, res) => {
+r.post('/car', upload.single('img'), async (req, res) => {
     const createCarSchema = joi.object({
         level_Id: joi.string().required(),
         car_photo: joi.string(),
@@ -95,7 +95,8 @@ r.post('/car', async (req, res) => {
         if (error) {
             return res.status(401).send(error.message)
         }
-        const createdData = await carModel.post(value)
+        const data = await cloudinary.uploader.upload(req.file.path, { public_id: req.file.originalname })
+        const createdData = await carModel.create(value)
         return res.status(200).send(createdData)
 })
 
