@@ -5,6 +5,7 @@ import adminModel from '../models/admin.js'
 import cloudinary from '../config_upload/cloudinary.js'
 import upload from '../config_upload/multer.js'
 import carLevelModel from '../models/car_level.js'
+import passengerBotModel from '../models/passenger_bot.js'
 
 
 const r = Router()
@@ -41,7 +42,6 @@ r.post('/car-level', upload.single('img'), async (req, res) => {
         return res.status(401).send(error.message)
     }
     const data = await cloudinary.uploader.upload(req.file.path, { public_id: req.file.originalname })
-    value.adminId = req.admin._id
     const newCarLevel = await carLevelModel.create({ ...value, photo: data.url })
     return res.status(200).send(newCarLevel)
 })
@@ -49,7 +49,7 @@ r.post('/car-level', upload.single('img'), async (req, res) => {
 //test edilib --> adminin yaratdigi masin levellerin getirir
 
 r.get('/car-level', async (req, res) => {
-    const allCarLevel = await carLevelModel.find({ adminId: req.admin._id })
+    const allCarLevel = await carLevelModel.find()
     return res.status(200).send(allCarLevel)
 })
 
@@ -71,7 +71,20 @@ r.put('/car-level/:id', upload.single('img'), async (req, res) => {
 })
 
 
-r.post('/car', async (req, res) => {
+r.post('/passenger-bot', async (req, res) => {
+    const passengerBotSchema = joi.object({
+
+        level_id: joi.string(),
+        carsId: joi.string(),
+        bot_photo: joi.string()
+
+    })
+    const { error, value } = passengerBotSchema.validate(req.body)
+    if (error) {
+        return res.status(401).send(error.message)
+    }
+    const data = await cloudinary.uploader.upload(req.file.path, { public_id: req.file.originalname })
+    const newPassengerBot = await passengerBotModel.create({ ...value })
 
 
 
