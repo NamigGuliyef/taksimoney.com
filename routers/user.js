@@ -7,6 +7,8 @@ import jwt from 'jsonwebtoken'
 import { jwt_secret } from "../utils.js";
 const r = Router()
 
+//test edilib-> user qeydiyyati
+
 r.post('/sign-up', async (req, res) => {
     const userSchema = joi.object({
         referralId: joi.string(),
@@ -48,6 +50,7 @@ r.post('/sign-up', async (req, res) => {
     return res.status(200).send('The verification code has been sent to your email address!')
 })
 
+//test edilib --> userin tesdiqlenmesi ucun mail adresine kod gondermek
 
 r.post('/verify', async (req, res) => {
     const { verify_code } = req.body
@@ -60,6 +63,7 @@ r.post('/verify', async (req, res) => {
     }
 })
 
+//test edilib --> userin tesdiqden sonra olan girisi
 
 r.post('/sign-in', async (req, res) => {
     const userSchema = joi.object({
@@ -86,6 +90,8 @@ r.post('/sign-in', async (req, res) => {
     }
 })
 
+
+//test edilib --> unudulan sifrenin berpa edilmesi ucun mail adresine link gondermek
 
 r.post('/forget-password', async (req, res) => {
     const { email } = req.body
@@ -114,6 +120,8 @@ r.post('/forget-password', async (req, res) => {
     })
 })
 
+
+//test edilib --> mail adresinde olan linke daxil olduqdan sonra yonlendirilen sehifede yeni parolu qeyd etmek
 
 r.post('/recovery/:token', (req, res) => {
     const { token } = req.params
