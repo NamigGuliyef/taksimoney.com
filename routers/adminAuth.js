@@ -115,6 +115,12 @@ r.put('/passenger-bot/:id', upload.single('photo'), async (req, res) => {
     return res.status(200).send(updatePassengerBot)
 })
 
+//test edilib --> sernisin botu silmek
+
+r.delete('/passenger-bot/:id', async (req, res) => {
+    const deletedPassengerBot = await passengerBotModel.findOneAndDelete({ _id: req.params.id })
+    return res.status(200).send(deletedPassengerBot)
+})
 
 //test edilib --> masin elave etmek
 
