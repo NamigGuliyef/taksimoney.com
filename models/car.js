@@ -16,7 +16,7 @@ const carSchema = new Schema({
     passenger_pickup_time: { type: String, required: true },
     passenger_transport_price: { type: Number, required: true },
     passenger_count_day: { type: Number, required: true },
-    user_Ids: { type: [mongoose.Schema.Types.ObjectId], ref: 'user', required: true }
+    user_Ids: { type: [mongoose.Schema.Types.ObjectId], ref: 'buyCars', required: true }
 
 }, { versionKey: false, timestamps: true })
 
